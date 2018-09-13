@@ -1,8 +1,8 @@
 #include <fstream>
 #include <string>
-typedef unsigned long long ul;
+typedef long long ul;
 using namespace std;
-ul GetFileName(string filename)
+ul GetFileSize(string filename)
 {
     ifstream is(filename.c_str(), ifstream::binary); // открываем файл на чтение
     is.seekg (0, is.end); // размещаем указатель в конец

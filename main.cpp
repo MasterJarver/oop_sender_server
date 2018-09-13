@@ -8,7 +8,7 @@
 #include <fstream>
 #include "getfilesize.h"
 #include <server.h>
-typedef unsigned long long ul;
+typedef long long ul;
 using namespace std;
 int main(int argc, char* argv[])
 {

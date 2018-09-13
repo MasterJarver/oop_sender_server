@@ -9,7 +9,7 @@
 #include <arpa/inet.h>
 #include <fstream>
 using namespace std;
-typedef unsigned long long ul;
+typedef long long ul;
 class Server
 {
 private:
@@ -21,10 +21,10 @@ private:
     ul i = 0; // итератор байт
     ul waitSizeFile = 0; // ожидаемый размер файла
     ul fileSize = 0; // реальный размер файла
-    long long recvSize = 0; // размер вычитаннх байт
-    int MasterSocket = 0; // серверный сокет
+    ul recvSize = 0; // размер вычитаннх байт
+    ul MasterSocket = 0; // серверный сокет
     struct sockaddr_in SockAddr; // структура для задания пары IP port
-    int ClientSocket = 0; // клиентский сокет
+    ul ClientSocket = 0; // клиентский сокет
 public:
     Server(char* portS, char* nameS); // конструктор, собирает порт и имя файла для сохранения//
     void ShowPortName();

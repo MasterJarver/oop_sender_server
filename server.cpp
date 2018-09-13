@@ -1,5 +1,5 @@
 #include "server.h"
-typedef unsigned long long ul;
+typedef long long ul;
 Server::Server(char* portS, char* nameS) // конструктор
 {
     this->portI = atoi(portS); // преобразование строки в int
@@ -25,21 +25,31 @@ void Server::StartServer() // запуск сервера, открытие се
 ul Server::ReadFileSize()
 {
     cout << "begin read file" << endl;
-    while(recvSize == 0 || recvSize == -1) // пока есть инфа для чтения
+    while(recvSize == 0) // пока есть инфа для чтения
     {
         recvSize = (ul)recv(ClientSocket, &waitSizeFile, 4, MSG_NOSIGNAL); // читаем в переменную из сокета
-        cout << "RecvSize: " << recvSize << endl;
+        //cout << "RecvSize: " << recvSize << endl;
         cout << "wait_size_file: " << waitSizeFile << endl;
+        if(waitSizeFile <= 0)
+        {
+            //cout << "Error" << endl;
+            break;
+        }
     }
     return waitSizeFile; // возвращаем размер файла в байтах
 }
 void Server::InfoForHuman(int time) // вывод инфрмации для чтения размера файла хуманом
 {
-    cout << "weight file in bytes: " << waitSizeFile << endl;
+    cout << "wait size file in bytes: " << waitSizeFile << endl;
     sleep(time); // время для чтения
 }
 ul Server::SaveFile() // запись файла на диск, возвращает i(количество записанных байт)
 {
+    if(waitSizeFile <= 0)
+    {
+        //cout << "Error Wait Size" << endl;
+        return -1;
+    }
     ofstream of(nameS, ofstream::binary); // открыли файл на дозапись в бинарном режиме
     while(i != waitSizeFile) // пока i не равно ожидаемому размеру
     {
